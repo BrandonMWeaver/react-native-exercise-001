@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Alert, Button, StyleSheet, Text, View } from 'react-native';
 
 export default class App extends Component {
   state = {
@@ -8,16 +8,34 @@ export default class App extends Component {
   }
 
   onIncrementPress = () => {
+    const alertButtons = [
+      {
+        text: "Revert",
+        onPress: this.onAlertRevertPress
+      },
+      {
+        text: "Continue"
+      }
+    ];
+
+    Alert.alert("Incremented!", `Current count is ${this.state.count + 1}`, alertButtons);
+
     this.setState({
       count: this.state.count + 1
     });
   }
-  
+
+  onAlertRevertPress = () => {
+    this.setState({
+      count: this.state.count - 1
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text>{this.state.count}</Text>
-        <Button onPress={this.onIncrementPress} title="increment" />
+        <Button onPress={this.onIncrementPress} title="Increment" />
         <StatusBar style="auto" />
       </View>
     );
