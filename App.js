@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Alert, Platform, SafeAreaView, StatusBar, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
+import OpenNotifyInfo from './components/OpenNotifyInfo';
+
 export default class App extends Component {
   state = {
+    window: "main",
     count: 0
   }
 
@@ -30,17 +33,43 @@ export default class App extends Component {
     });
   }
 
+  onOpenNotifyInfoPress = () => {
+    this.setState({
+      window: "open-notify-info"
+    });
+  }
+
+  onMainPress = () => {
+    this.setState({
+      window: "main"
+    });
+  }
+
   render() {
-    return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.contentContainer}>
-          <Text style={styles.centered}>{this.state.count}</Text>
-          <TouchableWithoutFeedback onPress={this.onIncrementPress}>
-            <Text style={styles.button}>Increment</Text>
-          </TouchableWithoutFeedback>
-        </View>
-      </SafeAreaView>
-    );
+    if (this.state.window === "main") {
+      return (
+        <SafeAreaView style={styles.container}>
+          <View style={styles.contentContainer}>
+            <Text style={styles.centered}>{this.state.count}</Text>
+            <TouchableWithoutFeedback onPress={this.onIncrementPress}>
+              <Text style={styles.button}>Increment</Text>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={this.onOpenNotifyInfoPress}>
+              <Text style={styles.button}>Open Notify Info</Text>
+            </TouchableWithoutFeedback>
+          </View>
+        </SafeAreaView>
+      );
+    }
+    else {
+      return (
+        <SafeAreaView style={styles.container}>
+          <View style={styles.contentContainer}>
+            <OpenNotifyInfo onMainPress={this.onMainPress} />
+          </View>
+        </SafeAreaView>
+      )
+    }
   }
 }
 
