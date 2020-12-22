@@ -1,6 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-import { Alert, Button, StyleSheet, Text, View } from 'react-native';
+import { Alert, Platform, SafeAreaView, StatusBar, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
 export default class App extends Component {
   state = {
@@ -33,11 +32,14 @@ export default class App extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>{this.state.count}</Text>
-        <Button onPress={this.onIncrementPress} title="Increment" />
-        <StatusBar style="auto" />
-      </View>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.contentContainer}>
+          <Text style={styles.centered}>{this.state.count}</Text>
+          <TouchableWithoutFeedback onPress={this.onIncrementPress}>
+            <Text style={styles.button}>Increment</Text>
+          </TouchableWithoutFeedback>
+        </View>
+      </SafeAreaView>
     );
   }
 }
@@ -45,8 +47,25 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    backgroundColor: "#cdcdff"
   },
+  contentContainer: {
+    flex: 1,
+    margin: 10,
+    padding: 10,
+    backgroundColor: "#fff",
+    borderRadius: 20
+  },
+  centered: {
+    textAlign: "center"
+  },
+  button: {
+    marginTop: 10,
+    padding: 10,
+    textAlign: "center",
+    color: "#fff",
+    backgroundColor: "#9b9bcd",
+    borderRadius: 20
+  }
 });
